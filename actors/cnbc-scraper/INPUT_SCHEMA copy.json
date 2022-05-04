@@ -1,0 +1,187 @@
+{
+  "title": "Input schema for Smart article extractor",
+  "description": "Input for Smart article extractor",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+      "startUrls": {
+          "title": "Category URLs",
+          "type": "array",
+          "description": "Can be main page URL or any category URLs. Article pages are found and enqueued from these. If you want direct article URLs, use `articleUrls` input instead",
+          "editor": "requestListSources",
+          "prefill": [{ "url": "https://www.theguardian.com" }]
+      },
+      "articleUrls": {
+          "title": "Article URLs",
+          "type": "array",
+          "description": "Direct URLs to the articles to be parsed. No extra pages are enqueued from article pages.",
+          "editor": "requestListSources"
+      },
+      "onlyNewArticles": {
+          "title": "Only new articles (only for small runs)",
+          "type": "boolean",
+          "default": false,
+          "description": "This option is only viable for smaller runs. If you plan to use this at large scale, use `onlyNewArticlesPerDomain` instead. If true, will scrape only new articles each you run it. All URLs you scraped are saved in dataset called `articles-state` and are compared with new ones."
+      },
+      "onlyNewArticlesPerDomain": {
+          "title": "Only new articles (saved per domain, preferable)",
+          "type": "boolean",
+          "default": false,
+          "description": "If true, will scrape only new articles each you run it. All URLs you scraped ar and are compared with new ones. Scraped articles are saved in one dataset per each domain, datasets are named 'ARTICLES-SCRAPED-domain'"
+      },
+      "onlyInsideArticles": {
+          "title": "Only inside domain articles",
+          "type": "boolean",
+          "description": "If true, will scrape only articles that are on the domain from where they are linked.",
+          "default": true
+      },
+      "enqueueFromArticles": {
+          "title": "Enqueue articles from articles",
+          "type": "boolean",
+          "description": "Normally, the scrapers only enqueues from category pages. This option can help to gather more articles per run.",
+          "default": false
+      },
+      "scanSitemaps": {
+          "title": "Find articles in sitemaps (dangerous)",
+          "type": "boolean",
+          "description": "Will scan different sitemaps of the first URL for articles. Be very careful with this option as it can load a huge amount of (sometimes old) articles and the scrape time/cost will raise.",
+          "default": false
+      },
+      "sitemapUrls": {
+          "title": "Sitemap URLs (safer)",
+          "type": "array",
+          "description": "Optionally you can also provide chosen sitemap URLs that have the articles you need to extract.",
+          "editor": "requestListSources"
+      },
+      "saveHtml": {
+          "title": "Save full HTML",
+          "type": "boolean",
+          "description": "Saves full HTML of the article page but makes data less readable."
+      },
+      "useGoogleBotHeaders": {
+          "title": "Use Google Bot headers",
+          "type": "boolean",
+          "description": "This option will allow you to bypass protection and/or paywall on some sites. Use with caution as it might get blocked.",
+          "default": false
+      },
+      "minWords": {
+          "title": "Minumum words",
+          "type": "integer",
+          "default": 150,
+          "description": "Article need to contain at least this amount of words to be extracted",
+          "sectionCaption": "Article recognition",
+          "sectionDescription": "These settings tell the actor what articles should be scraped. Leaving default values usually works fine."
+      },
+      "dateFrom": {
+          "title": "Date from",
+          "type": "string",
+          "description": "Only articles from this day to present will be scraped. If empty, all articles will be scraped. Format is YYYY-MM-DD, e.g. 2019-12-31, or Number type e.g. 1 week or 20 days",
+          "editor": "textfield"
+      },
+      "mustHaveDate": {
+          "title": "Must have date",
+          "type": "boolean",
+          "description": "If checked, the article must have a date of release to be considered valid.",
+          "default": true
+      },
+      "isUrlArticleDefinition": {
+          "title": "Is URL article?",
+          "type": "object",
+          "description": "JSON settings of what considered a link to an article. If any of them is true, then the link will be opened.",
+          "editor": "json",
+          "prefill": { "minDashes": 4, "hasDate": true, "linkIncludes": ["article", "storyid", "?p=", "id=", "/fpss/track", ".html", "/content/"] }
+      },
+      "pseudoUrls": {
+          "title": "Pseudo URLs",
+          "type": "array",
+          "description": "Can be used to enqueue more pages like pagination or categories. Doesn't work for articles, they are recognized by the recognition system.",
+          "editor": "requestListSources",
+          "sectionCaption": "Custom enqueueing",
+          "sectionDescription": "Use these settings to enqueue more pages. If you want to enqueue direct article URLs this way, you have to add `{ \"label\": \"article\"}` to the userData`"
+      },
+      "linkSelector": {
+          "title": "Link selector",
+          "type": "string",
+          "description": "You can limit <a> tags whose links will be enqueued. By default this is empty, add `a.some-class` to enable it",
+          "editor": "textfield"
+      },
+      "maxDepth": {
+          "title": "Max depth",
+          "type": "integer",
+          "description": "Maximum depth of crawling. 0 is only start URLs, 1 are first level links etc. Only valid for pseudo URLs"
+      },
+      "maxPagesPerCrawl": {
+          "title": "Max pages per crawl",
+          "type": "integer",
+          "description": "Maximum number of total pages crawled. Includes home page, pagination pages, invalid articles etc."
+      },
+      "maxArticlesPerCrawl": {
+          "title": "Max articles per crawl",
+          "type": "integer",
+          "description": "Maximum number of valid articles scraped. The crawler will stop automatically after reaching this number."
+      },
+      "maxConcurrency": {
+          "title": "Max concurrency",
+          "type": "integer",
+          "description": "You can limit the speed of the scraper. Don't forget to lower your memory too to save Compute units."
+      },
+      "proxyConfiguration": {
+          "title": "Proxy configuration",
+          "type": "object",
+          "description": "Proxy configuration",
+          "prefill": { "useApifyProxy": true },
+          "editor": "proxy",
+          "sectionCaption": "Proxy configuration"
+      },
+      "useBrowser": {
+          "title": "Use browser (Puppeteer)",
+          "type": "boolean",
+          "description": "Using browser is more expensive but gives you ability to evaluate JavaScript and wait for dynamically loaded data.",
+          "default": false,
+          "sectionCaption": "Browser options"
+      },
+      "pageWaitMs": {
+          "title": "Wait for on each page",
+          "type": "integer",
+          "description": "How long to wait on each page before extracting data",
+          "unit": "ms"
+      },
+      "pageWaitSelector": {
+          "title": "Wait for selector on each page",
+          "type": "string",
+          "description": "For what selector to wait on each page before extracting data",
+          "editor": "textfield"
+      },
+      "extendOutputFunction": {
+          "title": "Extend output function",
+          "type": "string",
+          "description": "A function that allows you to merge your custom extraction with the default one. You have to return an object from this function. This object will be merged/overwrite the default output for each article.",
+          "prefill": "($) => {\n    const result = {};\n    // Uncomment to add a title to the output\n    // result.pageTitle = $('title').text().trim();\n\n    return result;\n}",
+          "sectionCaption": "Extend Output Function",
+          "sectionDescription": "This is only needed if the default output is not good enough for you. Be careful that you should provide valid JavaScript.",
+          "editor": "javascript"
+      },
+      "stopAfterCUs": {
+          "title": "Stop after CUs",
+          "type": "integer",
+          "description": "Actor run will finish after reachin certain amount of Compute units.",
+          "sectionCaption": "Compute units & notifications"
+      },
+      "notificationEmails": {
+          "title": "Notification emails",
+          "type": "array",
+          "description": "Emails where should the bellow notifications should be sent.",
+          "editor": "stringList"
+      },
+      "notifyAfterCUs": {
+          "title": "Notify after CUs",
+          "type": "integer",
+          "description": "Actor will send notifications on provide email when it reaches provided CUs."
+      },
+      "notifyAfterCUsPeriodically": {
+          "title": "Notify every CUs (periodically)",
+          "type": "integer",
+          "description": "Actor will send notifications on provide email every provided CUs reached from last notification."
+      }
+  }
+}

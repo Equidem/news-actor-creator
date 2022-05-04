@@ -1,0 +1,33 @@
+{
+  "title": "Input schema for Smart article extractor",
+  "description": "Input for Smart article extractor",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "startUrls": {
+      "title": "Category URLs",
+      "type": "array",
+      "description": "Can be main page URL or any category URLs. Article pages are found and enqueued from these. If you want direct article URLs, use `articleUrls` input instead",
+      "editor": "requestListSources",
+      "prefill": [{ "url": "https://www.theguardian.com" }]
+    },
+    "maxArticlesPerCrawl": {
+      "title": "Max articles per crawl",
+      "type": "integer",
+      "description": "Maximum number of valid articles scraped. The crawler will stop automatically after reaching this number.",
+      "prefill": 100
+    },
+    "dateFrom": {
+      "title": "Date from",
+      "type": "string",
+      "description": "Only articles from this day to present will be scraped. If empty, all articles will be scraped. Format is YYYY-MM-DD, e.g. 2019-12-31, or Number type e.g. 1 week or 20 days",
+      "editor": "textfield"
+    },
+    "onlyNewArticlesPerDomain": {
+      "title": "Only new articles",
+      "type": "boolean",
+      "default": false,
+      "description": "If true, will scrape only new articles each time you run it. All URLs you scraped are compared with saved ones. Scraped articles are saved in one dataset per each domain, datasets are named 'ARTICLES-SCRAPED-domain'"
+    }
+  }
+}
