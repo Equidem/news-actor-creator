@@ -7,9 +7,9 @@ This free [TARGET WEBSITE NAME] API will let you scrape and extract large datase
 [TARGET WEBSITE NAME] Scraper is really easy to use. Just follow these steps to start scraping.
 
 1. Click *Try for free*
-2. Use the default [TARGET WEBSITE URL] or customize it to only scrape a section or category on [TARGET WEBSITE NAME]
+2. Use the default start URLs or customize them to only scrape a section or category on [TARGET WEBSITE NAME]
 3. Select the maximum number of items you want to scrape.
-4. Click *Run*
+4. Click *Start*
 5. Preview and export your data from the *Dataset* tab
 
 ## Why scrape [TARGET WEBSITE NAME]?
