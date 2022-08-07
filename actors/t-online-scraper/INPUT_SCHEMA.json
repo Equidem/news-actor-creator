@@ -9,7 +9,7 @@
       "type": "array",
       "description": "Can be main page URL or any category URLs. Article pages are found and enqueued from these.",
       "editor": "requestListSources",
-      "prefill": [{"url":"https://www.t-online.de/region/berlin/"}]
+      "prefill": [{"url":"https://www.t-online.de/"}]
     },
     "maxArticlesPerCrawl": {
       "title": "Maximum number of articles",
