@@ -9,7 +9,7 @@
       "type": "array",
       "description": "Can be main page URL or any category URLs. Article pages are found and enqueued from these.",
       "editor": "requestListSources",
-      "prefill": [{"url":"http://usnews.com"}]
+      "prefill": [{"url":"https://www.usnews.com/news?top_nav_News"}]
     },
     "maxArticlesPerCrawl": {
       "title": "Maximum number of articles",
